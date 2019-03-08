@@ -32,7 +32,7 @@ import static com.minhui.vpn.utils.VpnServiceHelper.getContext;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button startBtn,stopBtn;
-    private TextView count_tv,show_tv;
+    private TextView count_tv,show_tv,show_http_tv;
 
     private ScheduledExecutorService timer;
     private List<NatSession> allNetConnection;
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         stopBtn = (Button)findViewById(R.id.stop_btn);
         count_tv = (TextView)findViewById(R.id.count_tv);
         show_tv = (TextView)findViewById(R.id.show_tv);
+        show_http_tv = (TextView)findViewById(R.id.show_http_tv);
         startBtn.setOnClickListener(this);
         stopBtn.setOnClickListener(this);
         handler = new Handler();
@@ -153,8 +154,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if((selectPackage != null && !selectPackage.equals(appPackageName))){
                             iterator.remove();
                         }
-
-
                     }
                 }
                 if (handler == null) {
@@ -171,13 +170,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void refreshView(List<NatSession> allNetConnection) {
-        count_tv.setText("抓到的数据包数："+allNetConnection.size());
+        count_tv.setText("抓包数："+allNetConnection.size());
         if(allNetConnection==null||allNetConnection.size()==0)
             return;
-        NatSession connection = allNetConnection.get(allNetConnection.size()-1);
+        NatSession connection = allNetConnection.get(0);
         StringBuffer stringBuffer = new StringBuffer();
-//        if (connection.type!=null)
-//            stringBuffer.append(connection.type);
         if (connection.getAppInfo() != null) {
             if (connection.getAppInfo().allAppName != null)
                 stringBuffer.append(connection.getAppInfo().allAppName+" ");
@@ -208,7 +205,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         stringBuffer.append(showSum);
         stringBuffer.append("\n");
         stringBuffer.append(hostName+" ");
-        show_tv.setText(stringBuffer);
+        if(connection.isHttp)
+            show_http_tv.setText(stringBuffer);
+        else
+            show_tv.setText(stringBuffer);
     }
 
     private void cancelTimer() {

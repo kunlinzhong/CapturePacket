@@ -22,6 +22,14 @@
         android:textColor="@android:color/black"
         android:gravity="center"/>
 
+    <TextView
+        android:id="@+id/show_http_tv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:textColor="@android:color/black"
+        android:gravity="center"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -38,7 +46,7 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:gravity="center"
-            android:allowUndo="false"
+            android:textAllCaps="false"
             android:text="Start"/>
 
         <View
@@ -52,7 +60,7 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:gravity="center"
-            android:allowUndo="false"
+            android:textAllCaps="false"
             android:text="Stop"/>
 
         <View
